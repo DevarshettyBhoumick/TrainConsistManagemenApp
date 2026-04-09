@@ -1,60 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-class Bogie {
-    String id;
-    String type;
-    int capacity;
-
-    Bogie(String id, String type, int capacity) {
-        this.id = id;
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "Bogie[ID=" + id + ", Type=" + type + ", Capacity=" + capacity + "]";
-    }
-}
- class UseCase13TrainConsistMgmnt {
+ class UseCase14TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC13 - Using Optional to Handle Bogies ");
+        System.out.println(" UC14 - Final Train Consist Summary ");
         System.out.println("==========================================\n");
 
-        List<Bogie> trainConsist = new ArrayList<>();
-        trainConsist.add(new Bogie("BG101", "Sleeper", 72));
-        trainConsist.add(new Bogie("BG102", "AC Chair", 56));
+        List<String> finalConsist = new ArrayList<>();
+        finalConsist.add("Engine (E101)");
+        finalConsist.add("Sleeper (S1)");
+        finalConsist.add("Sleeper (S2)");
+        finalConsist.add("AC Chair (A1)");
+        finalConsist.add("First Class (F1)");
+        finalConsist.add("Cargo (C1)");
+        finalConsist.add("Guard Van (G1)");
 
-        String searchId = "BG101";
-        Optional<Bogie> foundBogie = findBogieById(trainConsist, searchId);
+        System.out.println("Finalized Train Formation:");
+        for (int i = 0; i < finalConsist.size(); i++) {
+            System.out.println("Position " + (i + 1) + ": " + finalConsist.get(i));
+        }
 
-        foundBogie.ifPresentOrElse(
-                b -> System.out.println("Bogie Found: " + b),
-                () -> System.out.println("Bogie with ID " + searchId + " not found.")
-        );
+        System.out.println("\nTotal Bogies Attached: " + finalConsist.size());
+        System.out.println("Train Status: READY FOR DEPARTURE");
 
-        String missingId = "BG999";
-        Optional<Bogie> missingBogie = findBogieById(trainConsist, missingId);
-
-        Bogie defaultBogie = missingBogie.orElse(new Bogie("DEFAULT", "General", 0));
-        System.out.println("\nSearching for " + missingId + " (using orElse):");
-        System.out.println("Result: " + defaultBogie);
-
-        System.out.println("\nUC13 Optional handling completed successfully...");
-    }
-
-    public static Optional<Bogie> findBogieById(List<Bogie> list, String id) {
-        return list.stream()
-                .filter(b -> b.getId().equals(id))
-                .findFirst();
+        System.out.println("\n==========================================");
+        System.out.println(" End of Train Consist Management App ");
+        System.out.println("==========================================");
     }
 }
