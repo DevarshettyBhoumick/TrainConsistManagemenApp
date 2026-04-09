@@ -1,32 +1,41 @@
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
- class UseCase6TrainConsistMgmnt {
+ class UseCase7TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC6 - Maintain Sorted Bogie IDs ");
+        System.out.println(" UC7 - Search and Sort Bogies ");
         System.out.println("==========================================\n");
 
-        TreeMap<String, String> sortedBogieMap = new TreeMap<>();
+        List<String> bogies = new ArrayList<>();
+        bogies.add("Sleeper");
+        bogies.add("AC Chair");
+        bogies.add("First Class");
+        bogies.add("General");
 
-        sortedBogieMap.put("BG104", "General");
-        sortedBogieMap.put("BG101", "Sleeper");
-        sortedBogieMap.put("BG103", "First Class");
-        sortedBogieMap.put("BG102", "AC Chair");
+        System.out.println("Original Bogie List:");
+        System.out.println(bogies);
 
-        System.out.println("Bogie Map (Sorted by ID):");
-        System.out.println(sortedBogieMap);
+        Collections.sort(bogies);
+        System.out.println("\nBogies after Sorting (Alphabetical):");
+        System.out.println(bogies);
 
-        System.out.println("\nFirst Bogie in Sequence: " + sortedBogieMap.firstKey());
-        System.out.println("Last Bogie in Sequence: " + sortedBogieMap.lastKey());
+        String searchBogie = "AC Chair";
+        int index = Collections.binarySearch(bogies, searchBogie);
+        System.out.println("\nSearching for '" + searchBogie + "':");
+        System.out.println("Found at index: " + index);
 
-        System.out.println("\nBogie Sequence Summary:");
-        for (Map.Entry<String, String> entry : sortedBogieMap.entrySet()) {
-            System.out.println("ID: " + entry.getKey() + " -> Type: " + entry.getValue());
-        }
+        Collections.reverse(bogies);
+        System.out.println("\nBogies after Reversing:");
+        System.out.println(bogies);
 
-        System.out.println("\nUC6 sorted mapping operations completed...");
+        Collections.shuffle(bogies);
+        System.out.println("\nBogies after Shuffling:");
+        System.out.println(bogies);
+
+        System.out.println("\nUC7 search and sort operations completed...");
     }
 }
