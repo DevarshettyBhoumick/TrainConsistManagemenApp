@@ -27,44 +27,50 @@ class Bogie {
     }
 }
 
- class UseCase10TrainConsistMgmnt {
+ class UseCase11TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC10 - Filter Bogies using Streams ");
+        System.out.println(" UC11 - Transform Bogie Data using Streams ");
         System.out.println("==========================================\n");
 
         List<Bogie> trainConsist = new ArrayList<>();
         trainConsist.add(new Bogie("BG101", "Sleeper", 72));
         trainConsist.add(new Bogie("BG102", "AC Chair", 56));
         trainConsist.add(new Bogie("BG103", "First Class", 24));
-        trainConsist.add(new Bogie("BG104", "Sleeper", 72));
-        trainConsist.add(new Bogie("BG105", "General", 90));
+        trainConsist.add(new Bogie("BG104", "General", 90));
 
         System.out.println("Original Train Consist:");
         trainConsist.forEach(System.out::println);
 
-        List<Bogie> sleeperBogies = trainConsist.stream()
-                .filter(b -> b.getType().equals("Sleeper"))
+        List<String> bogieIds = trainConsist.stream()
+                .map(b -> b.id)
                 .collect(Collectors.toList());
 
-        System.out.println("\nFiltered Bogies (Type: Sleeper):");
-        sleeperBogies.forEach(System.out::println);
+        System.out.println("\nExtracted Bogie IDs (Map to String):");
+        System.out.println(bogieIds);
 
-        List<Bogie> highCapacityBogies = trainConsist.stream()
-                .filter(b -> b.getCapacity() > 60)
+        List<String> upperCaseTypes = trainConsist.stream()
+                .map(b -> b.getType().toUpperCase())
                 .collect(Collectors.toList());
 
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        highCapacityBogies.forEach(System.out::println);
+        System.out.println("\nBogie Types in Uppercase:");
+        System.out.println(upperCaseTypes);
 
-        long count = trainConsist.stream()
-                .filter(b -> b.getCapacity() > 50)
-                .count();
+        int totalCapacity = trainConsist.stream()
+                .mapToInt(Bogie::getCapacity)
+                .sum();
 
-        System.out.println("\nNumber of bogies with capacity > 50: " + count);
+        System.out.println("\nTotal Passenger Capacity of Train: " + totalCapacity);
 
-        System.out.println("\nUC10 stream filtering completed successfully...");
+        double averageCapacity = trainConsist.stream()
+                .mapToInt(Bogie::getCapacity)
+                .average()
+                .orElse(0.0);
+
+        System.out.println("Average Bogie Capacity: " + averageCapacity);
+
+        System.out.println("\nUC11 stream transformation completed successfully...");
     }
 }
