@@ -1,36 +1,39 @@
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
- class UseCase4TrainConsistMgmnt {
+ class UseCase5TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC4 - Maintain Ordered Bogie Consist ");
+        System.out.println(" UC5 - Map Bogie IDs to Bogie Types ");
         System.out.println("==========================================\n");
 
-        LinkedList<String> trainConsist = new LinkedList<>();
+        Map<String, String> bogieMap = new HashMap<>();
 
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        bogieMap.put("BG101", "Sleeper");
+        bogieMap.put("BG102", "AC Chair");
+        bogieMap.put("BG103", "First Class");
+        bogieMap.put("BG104", "General");
 
-        System.out.println("Initial Train Consist:");
-        System.out.println(trainConsist);
+        System.out.println("Bogie Map (ID -> Type):");
+        System.out.println(bogieMap);
 
-        trainConsist.add(2, "Pantry Car");
+        String bogieId = "BG102";
+        System.out.println("\nSearching for Bogie ID: " + bogieId);
+        if (bogieMap.containsKey(bogieId)) {
+            System.out.println("Bogie Type for " + bogieId + " is: " + bogieMap.get(bogieId));
+        }
 
-        System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
-        System.out.println(trainConsist);
+        bogieMap.remove("BG104");
+        System.out.println("\nAfter Removing BG104:");
+        System.out.println(bogieMap);
 
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
+        System.out.println("\nFinal Bogie Assignment Summary:");
+        for (Map.Entry<String, String> entry : bogieMap.entrySet()) {
+            System.out.println("Bogie ID: " + entry.getKey() + " | Type: " + entry.getValue());
+        }
 
-        System.out.println("\nAfter Removing First and Last Bogie:");
-        System.out.println(trainConsist);
-
-        System.out.println("\nUC4 ordered consist operations completed...");
+        System.out.println("\nUC5 mapping operations completed successfully...");
     }
 }
