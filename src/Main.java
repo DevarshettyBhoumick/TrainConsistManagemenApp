@@ -2,40 +2,55 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
- class UseCase7TrainConsistMgmnt {
+class Bogie implements Comparable<Bogie> {
+    String id;
+    String type;
+    int capacity;
+
+    Bogie(String id, String type, int capacity) {
+        this.id = id;
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public int compareTo(Bogie other) {
+        return Integer.compare(this.capacity, other.capacity);
+    }
+
+    @Override
+    public String toString() {
+        return "Bogie[ID=" + id + ", Type=" + type + ", Capacity=" + capacity + "]";
+    }
+}
+
+ class UseCase8TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC7 - Search and Sort Bogies ");
+        System.out.println(" UC8 - Custom Bogie Objects and Sorting ");
         System.out.println("==========================================\n");
 
-        List<String> bogies = new ArrayList<>();
-        bogies.add("Sleeper");
-        bogies.add("AC Chair");
-        bogies.add("First Class");
-        bogies.add("General");
+        List<Bogie> trainConsist = new ArrayList<>();
 
-        System.out.println("Original Bogie List:");
-        System.out.println(bogies);
+        trainConsist.add(new Bogie("BG101", "Sleeper", 72));
+        trainConsist.add(new Bogie("BG102", "AC Chair", 56));
+        trainConsist.add(new Bogie("BG103", "First Class", 24));
+        trainConsist.add(new Bogie("BG104", "General", 90));
 
-        Collections.sort(bogies);
-        System.out.println("\nBogies after Sorting (Alphabetical):");
-        System.out.println(bogies);
+        System.out.println("Original Bogie List (By Insertion):");
+        for (Bogie b : trainConsist) {
+            System.out.println(b);
+        }
 
-        String searchBogie = "AC Chair";
-        int index = Collections.binarySearch(bogies, searchBogie);
-        System.out.println("\nSearching for '" + searchBogie + "':");
-        System.out.println("Found at index: " + index);
+        Collections.sort(trainConsist);
 
-        Collections.reverse(bogies);
-        System.out.println("\nBogies after Reversing:");
-        System.out.println(bogies);
+        System.out.println("\nSorted Bogie List (By Capacity - Ascending):");
+        for (Bogie b : trainConsist) {
+            System.out.println(b);
+        }
 
-        Collections.shuffle(bogies);
-        System.out.println("\nBogies after Shuffling:");
-        System.out.println(bogies);
-
-        System.out.println("\nUC7 search and sort operations completed...");
+        System.out.println("\nUC8 custom object operations completed...");
     }
 }
