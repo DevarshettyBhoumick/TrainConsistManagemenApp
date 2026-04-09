@@ -1,39 +1,32 @@
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 
- class UseCase5TrainConsistMgmnt {
+ class UseCase6TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC5 - Map Bogie IDs to Bogie Types ");
+        System.out.println(" UC6 - Maintain Sorted Bogie IDs ");
         System.out.println("==========================================\n");
 
-        Map<String, String> bogieMap = new HashMap<>();
+        TreeMap<String, String> sortedBogieMap = new TreeMap<>();
 
-        bogieMap.put("BG101", "Sleeper");
-        bogieMap.put("BG102", "AC Chair");
-        bogieMap.put("BG103", "First Class");
-        bogieMap.put("BG104", "General");
+        sortedBogieMap.put("BG104", "General");
+        sortedBogieMap.put("BG101", "Sleeper");
+        sortedBogieMap.put("BG103", "First Class");
+        sortedBogieMap.put("BG102", "AC Chair");
 
-        System.out.println("Bogie Map (ID -> Type):");
-        System.out.println(bogieMap);
+        System.out.println("Bogie Map (Sorted by ID):");
+        System.out.println(sortedBogieMap);
 
-        String bogieId = "BG102";
-        System.out.println("\nSearching for Bogie ID: " + bogieId);
-        if (bogieMap.containsKey(bogieId)) {
-            System.out.println("Bogie Type for " + bogieId + " is: " + bogieMap.get(bogieId));
+        System.out.println("\nFirst Bogie in Sequence: " + sortedBogieMap.firstKey());
+        System.out.println("Last Bogie in Sequence: " + sortedBogieMap.lastKey());
+
+        System.out.println("\nBogie Sequence Summary:");
+        for (Map.Entry<String, String> entry : sortedBogieMap.entrySet()) {
+            System.out.println("ID: " + entry.getKey() + " -> Type: " + entry.getValue());
         }
 
-        bogieMap.remove("BG104");
-        System.out.println("\nAfter Removing BG104:");
-        System.out.println(bogieMap);
-
-        System.out.println("\nFinal Bogie Assignment Summary:");
-        for (Map.Entry<String, String> entry : bogieMap.entrySet()) {
-            System.out.println("Bogie ID: " + entry.getKey() + " | Type: " + entry.getValue());
-        }
-
-        System.out.println("\nUC5 mapping operations completed successfully...");
+        System.out.println("\nUC6 sorted mapping operations completed...");
     }
 }
