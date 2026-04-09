@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 class Bogie {
     String id;
@@ -14,8 +13,8 @@ class Bogie {
         this.capacity = capacity;
     }
 
-    public String getType() {
-        return type;
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -23,40 +22,39 @@ class Bogie {
         return "Bogie[ID=" + id + ", Type=" + type + ", Capacity=" + capacity + "]";
     }
 }
-
-class UseCase12TrainConsistMgmnt {
+ class UseCase13TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
         System.out.println("==========================================");
-        System.out.println(" UC12 - Group Bogies using Streams ");
+        System.out.println(" UC13 - Using Optional to Handle Bogies ");
         System.out.println("==========================================\n");
 
         List<Bogie> trainConsist = new ArrayList<>();
         trainConsist.add(new Bogie("BG101", "Sleeper", 72));
         trainConsist.add(new Bogie("BG102", "AC Chair", 56));
-        trainConsist.add(new Bogie("BG103", "First Class", 24));
-        trainConsist.add(new Bogie("BG104", "Sleeper", 72));
-        trainConsist.add(new Bogie("BG105", "General", 90));
-        trainConsist.add(new Bogie("BG106", "AC Chair", 56));
 
-        System.out.println("Original Train Consist:");
-        trainConsist.forEach(System.out::println);
+        String searchId = "BG101";
+        Optional<Bogie> foundBogie = findBogieById(trainConsist, searchId);
 
-        Map<String, List<Bogie>> bogiesByType = trainConsist.stream()
-                .collect(Collectors.groupingBy(Bogie::getType));
+        foundBogie.ifPresentOrElse(
+                b -> System.out.println("Bogie Found: " + b),
+                () -> System.out.println("Bogie with ID " + searchId + " not found.")
+        );
 
-        System.out.println("\nBogies Grouped by Type:");
-        bogiesByType.forEach((type, list) -> {
-            System.out.println(type + ": " + list);
-        });
+        String missingId = "BG999";
+        Optional<Bogie> missingBogie = findBogieById(trainConsist, missingId);
 
-        Map<String, Long> bogieCountByType = trainConsist.stream()
-                .collect(Collectors.groupingBy(Bogie::getType, Collectors.counting()));
+        Bogie defaultBogie = missingBogie.orElse(new Bogie("DEFAULT", "General", 0));
+        System.out.println("\nSearching for " + missingId + " (using orElse):");
+        System.out.println("Result: " + defaultBogie);
 
-        System.out.println("\nBogie Count by Type:");
-        System.out.println(bogieCountByType);
+        System.out.println("\nUC13 Optional handling completed successfully...");
+    }
 
-        System.out.println("\nUC12 stream grouping operations completed successfully...");
+    public static Optional<Bogie> findBogieById(List<Bogie> list, String id) {
+        return list.stream()
+                .filter(b -> b.getId().equals(id))
+                .findFirst();
     }
 }
